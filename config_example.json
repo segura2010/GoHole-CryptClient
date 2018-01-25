@@ -1,0 +1,7 @@
+{
+	"DNSPort": "53",
+	"GoHoleServer": "127.0.0.1",
+	"GoHoleServerPort": "443",
+
+	"EncryptionKey": "enc.key"
+}
