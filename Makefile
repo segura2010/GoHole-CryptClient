@@ -7,8 +7,8 @@ default: linux
 
 install:
 	@go install ${LDFLAGS}
-	@mv ${GOPATH}/bin/GoHole ${GOPATH}/bin/gohole
-	@echo "Binary on ${GOPATH}/bin/gohole"
+	@mv ${GOPATH}/bin/GoHole-CryptClient ${GOPATH}/bin/gohole-cryptclient
+	@echo "Binary on ${GOPATH}/bin/gohole-cryptclient"
 
 clean:
 	@rm -rf bin/
