@@ -12,16 +12,26 @@ import (
 
 func handleDnsRequest(w dns.ResponseWriter, r *dns.Msg) {
 	m := new(dns.Msg)
+	m.SetReply(r)
+	m.Compress = false
+	if r.Opcode != dns.OpcodeQuery{
+		w.WriteMsg(m)
+		return
+	}
+
+	tmp := new(dns.Msg)
 	
 	queryBytes, err := r.Pack()
 	if err != nil{
 		log.Printf("*** error: %s\n", err.Error())
+		w.WriteMsg(m)
 		return
 	}
 
 	ciphertext, err := encryption.Encrypt(queryBytes)
 	if err != nil{
 		log.Printf("*** error: %s\n", err.Error())
+		w.WriteMsg(m)
 		return
 	}
 
@@ -29,6 +39,7 @@ func handleDnsRequest(w dns.ResponseWriter, r *dns.Msg) {
 	conn, err := net.Dial("udp", config.GetGoHoleServerAndPort())
 	if err != nil {
 		log.Printf("*** error: %s\n", err.Error())
+		w.WriteMsg(m)
 		return
 	}
 	defer conn.Close()
@@ -42,10 +53,13 @@ func handleDnsRequest(w dns.ResponseWriter, r *dns.Msg) {
 	reply, err := encryption.Decrypt(buffer)
 	if err != nil {
 		log.Printf("*** error: %s\n", err.Error())
+		w.WriteMsg(m)
 		return
 	}
 
-	m.Unpack(reply)
+	tmp.Unpack(reply)
+
+	m.Answer = tmp.Answer
 	w.WriteMsg(m)
 }
 
