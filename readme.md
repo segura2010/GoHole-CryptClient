@@ -2,7 +2,7 @@
 
 GoHole is a DNS server written in Golang with the same idea than the [PiHole](https://pi-hole.net), blocking advertisements's and tracking's domains.
 
-In order to provide a safer way to make DNS queries, GoHole introduces RSA encryption, allowing you to encrypt all your DNS queries. To make use of the encryption feeature, you need the GoHole CryptClient, which is basically a "proxy DNS server" that listen for unencrypted queries in your computer and then encrypts these queries to send the encrypted queries to your GoHole server. The server will respond with an encrypted reply that this client will unencryt and send as result to your system.
+In order to provide a safer way to make DNS queries, GoHole introduces AES encryption, allowing you to encrypt all your DNS queries. To make use of the encryption feeature, you need the GoHole CryptClient, which is basically a "proxy DNS server" that listen for unencrypted queries in your computer and then encrypts these queries to send the encrypted queries to your GoHole server. The server will respond with an encrypted reply that this client will unencryt and send as result to your system.
 
 All your DNS queries will be encrypted and safe! :)
 
